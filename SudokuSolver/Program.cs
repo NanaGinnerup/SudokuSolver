@@ -1,3 +1,5 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
-Console.WriteLine("Hello, World!");
+using SudokuSolver;
+
+var loader = new SudokuLoader(null);
