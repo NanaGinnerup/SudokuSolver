@@ -2,4 +2,4 @@
 
 using SudokuSolver;
 
-var loader = new SudokuLoader(null);
+var loader = new SudokuLoader(null, 2);
