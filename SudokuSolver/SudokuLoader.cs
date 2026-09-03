@@ -36,6 +36,7 @@ public class SudokuLoader
     {
         var n = GetSudokuSize(oneLineSudoku);
         var legalValues = Enumerable.Range(1, n).ToList();
+        var squareN = (int) Math.Sqrt(n);
         
         var cellList = new List<Cell>();
         var cellIndex = 0;
@@ -46,11 +47,13 @@ public class SudokuLoader
                 var cellValue = oneLineSudoku.Puzzle[cellIndex] != '0' 
                     ? (int) char.GetNumericValue(oneLineSudoku.Puzzle[cellIndex])
                     : (int?) null;
+                var rowIntegerDivision = (row - 1) / squareN;
+                var colIntegerDivision = (col - 1) / squareN;
                 var cell = new Cell
                 {
                     XValue = col,
                     YValue = row,
-                    SquareValue = 0,
+                    SquareValue = 1 + 3 * rowIntegerDivision + colIntegerDivision,
                     Value = cellValue,
                     PossibleValues = cellValue != null 
                         ? [(int) cellValue] 
