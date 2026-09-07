@@ -10,7 +10,11 @@ public class SudokuLoader
 {
     public SudokuLoader(string? fileLocation, int index = 0, bool header = true)
     {
-        fileLocation ??= "C:\\Users\\nanag\\RiderProjects\\SudokuSolver\\SudokuSolver\\Data/sudoku.csv";
+        if (fileLocation == null)
+        {
+            var directory = Directory.GetCurrentDirectory();
+            fileLocation = $"{directory}/Data/sudoku.csv";
+        }
         var reader = new StreamReader(fileLocation);
         
         var config = new CsvConfiguration(CultureInfo.InvariantCulture)
