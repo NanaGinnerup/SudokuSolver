@@ -8,7 +8,7 @@ namespace SudokuSolver;
 
 public class SudokuLoader
 {
-    public SudokuLoader(string? fileLocation, int index = 0, bool header = true)
+    public Sudoku? LoadSudoku(string? fileLocation, int index = 0, bool header = true)
     {
         if (fileLocation == null)
         {
@@ -21,7 +21,12 @@ public class SudokuLoader
         {
             HasHeaderRecord = header
         };
-        var csv = new CsvReader(reader, CultureInfo.InvariantCulture);
+        var csv = new CsvReader(reader, config);
+        if (header)
+        {
+            csv.Read();
+            csv.ReadHeader();
+        }
 
         var i = 0;
         while (csv.Read())
@@ -30,10 +35,12 @@ public class SudokuLoader
             {
                 var oneLineSudoku = csv.GetRecord<OneLineSudoku>();
                 var sudoku = ConvertToSudoku(oneLineSudoku);
-                break;
+                return sudoku;
             }
             i += 1;
         }
+
+        return null;
     }
 
     private Sudoku ConvertToSudoku(OneLineSudoku oneLineSudoku)

@@ -2,4 +2,5 @@
 
 using SudokuSolver;
 
-var loader = new SudokuLoader(null, 2);
+var loader = new SudokuLoader();
+var sudoku = loader.LoadSudoku(null, 2);
