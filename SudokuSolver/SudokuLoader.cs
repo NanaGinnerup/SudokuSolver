@@ -8,7 +8,7 @@ namespace SudokuSolver;
 
 public class SudokuLoader
 {
-    public Sudoku? LoadSudoku(string? fileLocation, int index = 0, bool header = true)
+    public Sudoku LoadSudoku(string? fileLocation, int index = 0, bool header = true)
     {
         if (fileLocation == null)
         {
@@ -22,25 +22,21 @@ public class SudokuLoader
             HasHeaderRecord = header
         };
         var csv = new CsvReader(reader, config);
-        if (header)
-        {
-            csv.Read();
-            csv.ReadHeader();
-        }
 
-        var i = 0;
-        while (csv.Read())
+        var allSudoku = csv
+            .GetRecords<OneLineSudoku>()
+            .ToList();
+        var numberSudoku = allSudoku.Count;
+        if (index >= numberSudoku)
         {
-            if (i == index)
-            {
-                var oneLineSudoku = csv.GetRecord<OneLineSudoku>();
-                var sudoku = ConvertToSudoku(oneLineSudoku);
-                return sudoku;
-            }
-            i += 1;
+            throw new IndexOutOfRangeException(
+                $"Requested index {index} exceeds the maximum index in data set ({numberSudoku - 1})");
         }
-
-        return null;
+        var oneLineSudoku = allSudoku
+            .Skip(index)
+            .FirstOrDefault();
+        var sudoku = ConvertToSudoku(oneLineSudoku!);
+        return sudoku;
     }
 
     private Sudoku ConvertToSudoku(OneLineSudoku oneLineSudoku)
@@ -93,7 +89,7 @@ public class SudokuLoader
         return n;
     }
     
-    public class OneLineSudoku
+    public abstract class OneLineSudoku
     {
         [Name("puzzle")]
         public required string Puzzle { get; set; }
