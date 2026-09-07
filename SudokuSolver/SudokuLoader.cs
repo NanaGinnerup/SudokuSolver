@@ -54,7 +54,7 @@ public class SudokuLoader
                     XValue = col,
                     YValue = row,
                     SquareValue = 1 + 3 * rowIntegerDivision + colIntegerDivision,
-                    Value = cellValue,
+                    CellValue = cellValue,
                     PossibleValues = cellValue != null 
                         ? [(int) cellValue] 
                         : legalValues,
