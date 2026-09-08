@@ -28,5 +28,6 @@ public class SudokuLoaderTests
         
         // Assert
         result.SudokuSize.Should().Be(4);
+        result.IncludedValues.Should().Contain([1,2,3,4]);
     }
 }
