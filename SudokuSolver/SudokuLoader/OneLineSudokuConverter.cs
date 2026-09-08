@@ -4,7 +4,9 @@ namespace SudokuSolver.SudokuLoader;
 
 public static class OneLineSudokuConverter
 {
-    public static Sudoku ConvertToSudoku(SudokuSolver.SudokuLoader.SudokuLoader.OneLineSudoku oneLineSudoku)
+    public static Sudoku ConvertToSudoku(
+        SudokuSolver.SudokuLoader.SudokuLoader.OneLineSudoku oneLineSudoku
+        )
     {
         var n = GetSudokuSize(oneLineSudoku);
         var legalValues = Enumerable.Range(1, n).ToList();
