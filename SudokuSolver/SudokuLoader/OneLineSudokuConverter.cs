@@ -1,45 +1,10 @@
-﻿using System.Globalization;
-using SudokuSolver.Contracts;
-using CsvHelper;
-using CsvHelper.Configuration;
-using CsvHelper.Configuration.Attributes;
+﻿using SudokuSolver.Contracts;
 
-namespace SudokuSolver;
+namespace SudokuSolver.SudokuLoader;
 
-public class SudokuLoader
+public static class OneLineSudokuConverter
 {
-    public Sudoku LoadSudoku(string? fileLocation, int index = 0, bool header = true)
-    {
-        if (fileLocation == null)
-        {
-            var directory = Directory.GetCurrentDirectory();
-            fileLocation = $"{directory}/Data/sudoku.csv";
-        }
-        var reader = new StreamReader(fileLocation);
-        
-        var config = new CsvConfiguration(CultureInfo.InvariantCulture)
-        {
-            HasHeaderRecord = header
-        };
-        var csv = new CsvReader(reader, config);
-
-        var allSudoku = csv
-            .GetRecords<OneLineSudoku>()
-            .ToList();
-        var numberSudoku = allSudoku.Count;
-        if (index >= numberSudoku)
-        {
-            throw new IndexOutOfRangeException(
-                $"Requested index {index} exceeds the maximum index in data set ({numberSudoku - 1})");
-        }
-        var oneLineSudoku = allSudoku
-            .Skip(index)
-            .FirstOrDefault();
-        var sudoku = ConvertToSudoku(oneLineSudoku!);
-        return sudoku;
-    }
-
-    private Sudoku ConvertToSudoku(OneLineSudoku oneLineSudoku)
+    public static Sudoku ConvertToSudoku(SudokuSolver.SudokuLoader.SudokuLoader.OneLineSudoku oneLineSudoku)
     {
         var n = GetSudokuSize(oneLineSudoku);
         var legalValues = Enumerable.Range(1, n).ToList();
@@ -76,8 +41,8 @@ public class SudokuLoader
         };
         return sudoku;
     }
-
-    private static int GetSudokuSize(OneLineSudoku oneLineSudoku)
+    
+    private static int GetSudokuSize(SudokuSolver.SudokuLoader.SudokuLoader.OneLineSudoku oneLineSudoku)
     {
         var cellCounts = oneLineSudoku.Puzzle.Length;
         var n = (int) Math.Sqrt(cellCounts);
@@ -87,13 +52,5 @@ public class SudokuLoader
                 $"Expected an n x n sudoku, but the sudoku is not a perfect square as it has {cellCounts} cells.");
         }
         return n;
-    }
-    
-    public class OneLineSudoku
-    {
-        [Name("puzzle")]
-        public required string Puzzle { get; set; }
-        [Name("solution")]
-        public required string Solution { get; set; }
     }
 }
