@@ -1,9 +1,9 @@
 ﻿using AutoFixture;
 using FluentAssertions;
-using Xunit;
 using SudokuSolver.SudokuLoader;
+using Xunit;
 
-namespace SudokuSolver.Tests;
+namespace SudokuSolver.SudokuSolver.Tests;
 
 public class SudokuLoaderTests
 {

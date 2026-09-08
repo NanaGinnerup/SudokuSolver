@@ -5,7 +5,7 @@ namespace SudokuSolver.SudokuLoader;
 public static class OneLineSudokuConverter
 {
     public static Sudoku ConvertToSudoku(
-        SudokuSolver.SudokuLoader.SudokuLoader.OneLineSudoku oneLineSudoku
+        SudokuLoader.OneLineSudoku oneLineSudoku
         )
     {
         var n = GetSudokuSize(oneLineSudoku);
@@ -44,7 +44,7 @@ public static class OneLineSudokuConverter
         return sudoku;
     }
     
-    private static int GetSudokuSize(SudokuSolver.SudokuLoader.SudokuLoader.OneLineSudoku oneLineSudoku)
+    private static int GetSudokuSize(SudokuLoader.OneLineSudoku oneLineSudoku)
     {
         var cellCounts = oneLineSudoku.Puzzle.Length;
         var n = (int) Math.Sqrt(cellCounts);
