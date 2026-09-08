@@ -1,5 +1,5 @@
 ﻿using AutoFixture;
-using SudokuSolver.Contracts;
+using FluentAssertions;
 using Xunit;
 using SudokuSolver.SudokuLoader;
 
@@ -7,7 +7,7 @@ namespace SudokuSolver.Tests;
 
 public class SudokuLoaderTests
 {
-    private readonly Fixture fixture = new Fixture();
+    private readonly Fixture _fixture = new Fixture();
 
     [Fact]
     public void legalSudokuString_ConvertToSudoku()
@@ -18,7 +18,7 @@ public class SudokuLoaderTests
             "3012" +
             "2300" +
             "4023";
-        var oneLineSudoku = fixture
+        var oneLineSudoku = _fixture
             .Build<SudokuLoader.SudokuLoader.OneLineSudoku>()
             .With(s => s.Puzzle, sudokuPuzzleString)
             .Create();
@@ -27,6 +27,6 @@ public class SudokuLoaderTests
         var result = OneLineSudokuConverter.ConvertToSudoku(oneLineSudoku);
         
         // Assert
-        var test = 0;
+        result.SudokuSize.Should().Be(4);
     }
 }
