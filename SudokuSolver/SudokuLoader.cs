@@ -60,7 +60,7 @@ public class SudokuLoader
                 {
                     XValue = col,
                     YValue = row,
-                    SquareValue = 1 + 3 * rowIntegerDivision + colIntegerDivision,
+                    SquareValue = 1 + squareN * rowIntegerDivision + colIntegerDivision,
                     CellValue = cellValue,
                     PossibleValues = cellValue != null 
                         ? [(int) cellValue] 
@@ -77,7 +77,7 @@ public class SudokuLoader
         return sudoku;
     }
 
-    private int GetSudokuSize(OneLineSudoku oneLineSudoku)
+    private static int GetSudokuSize(OneLineSudoku oneLineSudoku)
     {
         var cellCounts = oneLineSudoku.Puzzle.Length;
         var n = (int) Math.Sqrt(cellCounts);
@@ -89,7 +89,7 @@ public class SudokuLoader
         return n;
     }
     
-    public abstract class OneLineSudoku
+    public class OneLineSudoku
     {
         [Name("puzzle")]
         public required string Puzzle { get; set; }
