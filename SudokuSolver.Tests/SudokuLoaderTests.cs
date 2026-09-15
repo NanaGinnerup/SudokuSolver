@@ -53,10 +53,10 @@ public class SudokuLoaderTests
 
         var actualCells = result.Cells.Select(c => new
         {
-            XValue = c.XValue,
-            YValue = c.YValue,
-            SquareValue = c.SquareValue,
-            CellValue = c.CellValue
+            c.XValue,
+            c.YValue,
+            c.SquareValue,
+            c.CellValue
         });
         actualCells.Should().BeEquivalentTo(expectedCells);
         
