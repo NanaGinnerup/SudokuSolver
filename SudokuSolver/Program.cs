@@ -1,6 +1,6 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
 using SudokuSolver;
+using SudokuSolver.SudokuLoader;
 
-var loader = new SudokuLoader();
-var sudoku = loader.LoadSudoku(null, 2);
+var sudoku = SudokuLoader.LoadSudoku(null, 2);

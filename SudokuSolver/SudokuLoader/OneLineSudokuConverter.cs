@@ -4,7 +4,9 @@ namespace SudokuSolver.SudokuLoader;
 
 public static class OneLineSudokuConverter
 {
-    public static Sudoku ConvertToSudoku(SudokuSolver.SudokuLoader.SudokuLoader.OneLineSudoku oneLineSudoku)
+    public static Sudoku ConvertToSudoku(
+        SudokuLoader.OneLineSudoku oneLineSudoku
+        )
     {
         var n = GetSudokuSize(oneLineSudoku);
         var legalValues = Enumerable.Range(1, n).ToList();
@@ -42,7 +44,7 @@ public static class OneLineSudokuConverter
         return sudoku;
     }
     
-    private static int GetSudokuSize(SudokuSolver.SudokuLoader.SudokuLoader.OneLineSudoku oneLineSudoku)
+    private static int GetSudokuSize(SudokuLoader.OneLineSudoku oneLineSudoku)
     {
         var cellCounts = oneLineSudoku.Puzzle.Length;
         var n = (int) Math.Sqrt(cellCounts);
