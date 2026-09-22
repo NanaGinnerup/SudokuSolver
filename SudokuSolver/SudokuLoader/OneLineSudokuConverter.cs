@@ -9,7 +9,7 @@ public static class OneLineSudokuConverter
         )
     {
         var n = GetSudokuSize(oneLineSudoku);
-        var legalValues = Enumerable.Range(1, n).ToList();
+        var legalValues = Enumerable.Range(1, n).ToHashSet();
         var squareN = (int) Math.Sqrt(n);
         
         var cellList = new List<Cell>();
