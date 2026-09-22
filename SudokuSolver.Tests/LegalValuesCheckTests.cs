@@ -1,4 +1,5 @@
 ﻿using AutoFixture;
+using FluentAssertions;
 using SudokuSolver.Contracts;
 using SudokuSolver.SolverFunctions;
 
@@ -7,11 +8,16 @@ namespace SudokuSolver.Tests;
 public class LegalValuesCheckTests
 {
     private readonly Fixture _fixture = new Fixture();
-        
+
+    public static TheoryData<int?[], int[]?, int[]?, int[]?> TestData => new()
+    {
+        { [null, 2], [4, 4], null, null },
+        { [null, 2], null, [4, 4], null },
+        { [null, 2], null, null, [4, 4] },
+    };
+    
     [Theory]
-    [InlineData(new int?[] {null, 2}, new [] {1, 2}, null, null)]
-    [InlineData(new[] {1, 2}, null, new [] {1, 2}, null)]
-    [InlineData(new[] {1, 2}, null, null, new [] {1, 2})]
+    [MemberData(nameof(TestData))]
     public void valuesExistInSharedEntity_ShouldExcludeValuesFromSharedEntity(
         int?[] values, int[]? rows, int[]? cols, int[]? squares
         )
@@ -35,8 +41,14 @@ public class LegalValuesCheckTests
             .With(s => s.Cells, cells)
             .Create();
         // Act
-        
+        // var result = sut.LegalValuesCheck(sudoku);
+        var result = sudoku; // Temporary
+
         //Assert
+        result.Cells
+            .Where(c => c.CellValue == null)
+            .Should()
+            .AllSatisfy(c => c.PossibleValues.Should().NotContain(4));
     }
 
 
