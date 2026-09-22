@@ -41,8 +41,7 @@ public class LegalValuesCheckTests
             .With(s => s.Cells, cells)
             .Create();
         // Act
-        // var result = sut.LegalValuesCheck(sudoku);
-        var result = sudoku; // Temporary
+        var result = sut.UpdatePossibleValues(sudoku);
 
         //Assert
         result.Cells
