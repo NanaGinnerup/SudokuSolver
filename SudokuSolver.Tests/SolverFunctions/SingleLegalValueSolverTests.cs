@@ -5,7 +5,7 @@ using SudokuSolver.SolverFunctions;
 
 namespace SudokuSolver.Tests.SolverFunctions;
 
-public class SinglePlacementSolverTests
+public class SingleLegalValueSolverTests
 {
     private readonly Fixture _fixture = new Fixture();
     
@@ -13,7 +13,7 @@ public class SinglePlacementSolverTests
     public void OnlyOnePossibleValue_CellValueUpdatedToTheValue()
     {
         // Arrange
-        var sut = _fixture.Create<SinglePlacementSolver>();
+        var sut = _fixture.Create<SingleLegalValueSolver>();
         
         var cellValue = _fixture.Create<int>();
         var cells = _fixture
@@ -37,7 +37,7 @@ public class SinglePlacementSolverTests
     public void MultiplePossibleValues_CellValueStaysNull()
     {
         // Arrange
-        var sut = _fixture.Create<SinglePlacementSolver>();
+        var sut = _fixture.Create<SingleLegalValueSolver>();
         
         var cells = _fixture
             .Build<Cell>()

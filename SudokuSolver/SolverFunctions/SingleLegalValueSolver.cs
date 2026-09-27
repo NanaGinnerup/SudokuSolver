@@ -2,7 +2,7 @@
 
 namespace SudokuSolver.SolverFunctions;
 
-public class SinglePlacementSolver
+public class SingleLegalValueSolver
 {
     public Sudoku Execute(Sudoku sudoku)
     {
