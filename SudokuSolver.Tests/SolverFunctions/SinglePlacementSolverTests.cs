@@ -16,14 +16,14 @@ public class SinglePlacementSolverTests
         var sut = _fixture.Create<SinglePlacementSolver>();
         
         var cellValue = _fixture.Create<int>();
-        var cell = _fixture
+        var cells = _fixture
             .Build<Cell>()
             .With(c => c.CellValue, (int?) null)
             .With(c => c.PossibleValues, [cellValue])
-            .Create();
+            .CreateMany();
         var sudoku = _fixture
             .Build<Sudoku>()
-            .With(s => s.Cells, [cell])
+            .With(s => s.Cells, cells.ToList())
             .Create();
         
         // Act
@@ -39,14 +39,14 @@ public class SinglePlacementSolverTests
         // Arrange
         var sut = _fixture.Create<SinglePlacementSolver>();
         
-        var cell = _fixture
+        var cells = _fixture
             .Build<Cell>()
             .With(c => c.CellValue, (int?) null)
             .With(c => c.PossibleValues, _fixture.CreateMany<int>().ToHashSet())
-            .Create();
+            .CreateMany();
         var sudoku = _fixture
             .Build<Sudoku>()
-            .With(s => s.Cells, [cell])
+            .With(s => s.Cells, cells.ToList())
             .Create();
         
         // Act
