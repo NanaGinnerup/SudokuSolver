@@ -3,7 +3,7 @@ using FluentAssertions;
 using SudokuSolver.Contracts;
 using SudokuSolver.SolverFunctions;
 
-namespace SudokuSolver.Tests;
+namespace SudokuSolver.Tests.SolverFunctions;
 
 public class LegalValuesCheckTests
 {
