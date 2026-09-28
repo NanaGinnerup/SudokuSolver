@@ -27,13 +27,6 @@ public class SinglePlacementSolver
     {
         foreach (var i in sudoku.IncludedValues)
         {
-            // var valuesOnlyAllowedOnePlace = sudoku.Cells
-            //     .Where(c => c.XValue == i && c.CellValue == null)
-            //     .SelectMany(c => c.PossibleValues)
-            //     .GroupBy(value => value)
-            //     .Where(g => g.Count() == 1)
-            //     .Select(g => g.Key)
-            //     ;
             var cellWithUniquePossibleValue = sudoku.Cells
                 .Where(c => c.XValue == i && c.CellValue == null)
                 .SelectMany(c => c.PossibleValues.Select(v => new
@@ -45,23 +38,21 @@ public class SinglePlacementSolver
                 .Where(g => g.Count() == 1)
                 .Select(g => g.Single())
                 .ToList();
+            if (cellWithUniquePossibleValue.Count == 0)
+                return sudoku;
             sudoku = sudoku with
             {
                 Cells = sudoku.Cells
                     .Select(c =>
-                            cellWithUniquePossibleValue
-                                .Select(x => x.Cell)
-                                .Contains(c)
-                            
-                        ? c with
                         {
-                            CellValue = cellWithUniquePossibleValue
-                                .Where(y => y.Cell == c)
-                                .First(y => y.PossibleValue)
+                            var matchedCell = cellWithUniquePossibleValue
+                                .FirstOrDefault(x => x.Cell == c);
+                            return matchedCell != null
+                                ? c with { CellValue = matchedCell.PossibleValue }
+                                : c;
                         }
-                        : c
-                    )
-            }
+                    ).ToList()
+            };
         }
         return sudoku;
     }

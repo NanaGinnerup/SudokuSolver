@@ -43,7 +43,8 @@ public class SinglePlacementSolverTests
         var result = sut.Execute(sudoku);
         
         // Assert
-        result.Cells.Select(c => c.CellValue).Should().AllBeEquivalentTo(1);
+        result.Cells.Count(c => c.CellValue == null).Should().Be(2);
+        result.Cells.Count(c => c.CellValue == 3).Should().Be(1);
     }
     
 }
