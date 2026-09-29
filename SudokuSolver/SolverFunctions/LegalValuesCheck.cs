@@ -14,9 +14,9 @@ public class LegalValuesCheck
                     sudoku.Cells
                         .Any(otherCell =>
                             (
-                                otherCell.XValue == cell.XValue 
-                                || otherCell.YValue == cell.YValue 
-                                || otherCell.SquareValue == cell.SquareValue
+                                otherCell.Row == cell.Row 
+                                || otherCell.Column == cell.Column 
+                                || otherCell.Square == cell.Square
                             )
                         && otherCell.CellValue == possibleValue
                         )
