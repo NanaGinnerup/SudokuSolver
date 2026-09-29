@@ -9,9 +9,9 @@ public record Sudoku
 
 public record Cell
 {
-    public int XValue { get; set; }
-    public int YValue { get; set; }
-    public int SquareValue { get; set; }
+    public int Row { get; set; }
+    public int Column { get; set; }
+    public int Square { get; set; }
     public int? CellValue { get; set; }
     public HashSet<int> PossibleValues { get; set; } 
 }
