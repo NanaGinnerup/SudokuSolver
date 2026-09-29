@@ -25,9 +25,9 @@ public static class OneLineSudokuConverter
                 var colIntegerDivision = (col - 1) / squareN;
                 var cell = new Cell
                 {
-                    XValue = col,
-                    YValue = row,
-                    SquareValue = 1 + squareN * rowIntegerDivision + colIntegerDivision,
+                    Row = row,
+                    Column = col,
+                    Square = 1 + squareN * rowIntegerDivision + colIntegerDivision,
                     CellValue = cellValue,
                     PossibleValues = cellValue != null 
                         ? [(int) cellValue] 

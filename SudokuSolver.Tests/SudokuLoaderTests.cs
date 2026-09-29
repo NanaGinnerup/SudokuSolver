@@ -31,31 +31,31 @@ public class SudokuLoaderTests
         ExpectedCell[] expectedCells = 
         [
             new(1, 1, 1, 1),
-            new(2, 1, 1, 2),
-            new(3, 1, 2, null),
-            new(4, 1, 2, 4),
+            new(1, 2, 1, 2),
+            new(1, 3, 2, null),
+            new(1, 4, 2, 4),
 
-            new(1, 2, 1, 3),
+            new(2, 1, 1, 3),
             new(2, 2, 1, null),
-            new(3, 2, 2, 1),
-            new(4, 2, 2, 2),
+            new(2, 3, 2, 1),
+            new(2, 4, 2, 2),
 
-            new(1, 3, 3, 2),
-            new(2, 3, 3, 3),
+            new(3, 1, 3, 2),
+            new(3, 2, 3, 3),
             new(3, 3, 4, null),
-            new(4, 3, 4, null),
+            new(3, 4, 4, null),
 
-            new(1, 4, 3, 4),
-            new(2, 4, 3, null),
-            new(3, 4, 4, 2),
+            new(4, 1, 3, 4),
+            new(4, 2, 3, null),
+            new(4, 3, 4, 2),
             new(4, 4, 4, 3)
         ];
 
         var actualCells = result.Cells.Select(c => new
         {
-            c.XValue,
-            c.YValue,
-            c.SquareValue,
+            c.Row,
+            c.Column,
+            c.Square,
             c.CellValue
         });
         actualCells.Should().BeEquivalentTo(expectedCells);
@@ -79,8 +79,8 @@ public class SudokuLoaderTests
     }
     
     private record ExpectedCell(
-        int XValue,
-        int YValue,
-        int SquareValue,
+        int Row,
+        int Column,
+        int Square,
         int? CellValue);
 }

@@ -74,9 +74,9 @@ public class LegalValuesCheckTests
     {
         return new Cell()
         {
-            XValue = row,
-            YValue = col,
-            SquareValue = squareValue,
+            Row = row,
+            Column = col,
+            Square = squareValue,
             CellValue = cellValue,
             PossibleValues = Enumerable.Range(1, 9).ToHashSet()
         };
