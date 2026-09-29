@@ -6,29 +6,21 @@ public class SinglePlacementSolver
 {
     public Sudoku Execute(Sudoku sudoku)
     {
-        foreach (var cellValue in sudoku.IncludedValues)
-        {
-            sudoku = tempFunc(sudoku);
-            break;
-            // sudoku = sudoku with
-            // {
-            //     Cells = sudoku.Cells
-            //         .GroupBy(c => c.XValue)
-            //         .Select(x => 
-            //             x.
-            //             )
-            // }
-        }
-
-        return sudoku;
+        var outputSudoku = sudoku;
+        outputSudoku = SolveForSinglePlacement(outputSudoku, c => c.Row);
+        outputSudoku = SolveForSinglePlacement(outputSudoku, c => c.Column);
+        outputSudoku = SolveForSinglePlacement(outputSudoku, c => c.Square);
+        if (outputSudoku != sudoku)
+            outputSudoku = Execute(outputSudoku);
+        return outputSudoku;
     }
 
-    private Sudoku tempFunc(Sudoku sudoku)
+    private Sudoku SolveForSinglePlacement(Sudoku sudoku, Func<Cell, int> cellPropertySelector)
     {
         foreach (var i in sudoku.IncludedValues)
         {
             var cellWithUniquePossibleValue = sudoku.Cells
-                .Where(c => c.XValue == i && c.CellValue == null)
+                .Where(c => cellPropertySelector(c) == i && c.CellValue == null)
                 .SelectMany(c => c.PossibleValues.Select(v => new
                 {
                     Cell = c,
@@ -40,6 +32,7 @@ public class SinglePlacementSolver
                 .ToList();
             if (cellWithUniquePossibleValue.Count == 0)
                 return sudoku;
+            
             sudoku = sudoku with
             {
                 Cells = sudoku.Cells
