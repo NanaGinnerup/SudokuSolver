@@ -24,7 +24,6 @@ public class LegalValuesCheckTests
         )
     {
         // Arrange
-        var sut = _fixture.Create<LegalValuesCheck>();
         var cells = new List<Cell>();
         var numberCells = cellValues.Length;
         for (var i = 0; i < numberCells; i++)
@@ -45,7 +44,7 @@ public class LegalValuesCheckTests
             .With(s => s.Cells, cells)
             .Create();
         // Act
-        var result = sut.UpdatePossibleValues(sudoku);
+        var result = LegalValuesCheck.UpdatePossibleValues(sudoku);
 
         //Assert
         var allPossibleCellValues = Enumerable.Range(1, 9).ToHashSet();
@@ -61,7 +60,7 @@ public class LegalValuesCheckTests
         result.Cells
             .Where(c => c.CellValue != null)
             .Should()
-            .AllSatisfy(c => c.PossibleValues.Should().Contain(allPossibleCellValues));
+            .AllSatisfy(c => c.PossibleValues.Should().BeEmpty());
     }
 
 
@@ -78,7 +77,7 @@ public class LegalValuesCheckTests
             Column = col,
             Square = squareValue,
             CellValue = cellValue,
-            PossibleValues = Enumerable.Range(1, 9).ToHashSet()
+            PossibleValues = cellValue == null ? Enumerable.Range(1, 9).ToHashSet() : []
         };
     }
 }
