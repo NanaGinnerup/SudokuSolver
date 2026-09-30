@@ -16,18 +16,18 @@ public class SingleLegalValueSolverTests
         var sut = _fixture.Create<SingleLegalValueSolver>();
         
         var cellValue = _fixture.Create<int>();
-        var cells = _fixture
+        var cell = _fixture
             .Build<Cell>()
             .With(c => c.CellValue, (int?) null)
             .With(c => c.PossibleValues, [cellValue])
-            .CreateMany();
+            .Create();
         var sudoku = _fixture
             .Build<Sudoku>()
-            .With(s => s.Cells, cells.ToList())
+            .With(s => s.Cells, [cell])
             .Create();
         
         // Act
-        var result = sut.Execute(sudoku);
+        var result = SingleLegalValueSolver.Execute(sudoku);
         
         // Assert
         result.Cells.Select(c => c.CellValue).Should().AllBeEquivalentTo(cellValue);
@@ -50,10 +50,41 @@ public class SingleLegalValueSolverTests
             .Create();
         
         // Act
-        var result = sut.Execute(sudoku);
+        var result = SingleLegalValueSolver.Execute(sudoku);
         
         // Assert
         result.Cells.Select(c => c.CellValue)
             .Should().AllBeEquivalentTo((int?) null);
     }
+
+    [Fact]
+    public void SolvedCellLeavesOnlyOnePossibleValueInOtherCell_BothCellValuesUpdated()
+    {
+        // Arrange
+        var sut = _fixture.Create<SingleLegalValueSolver>();
+
+        var cell = _fixture
+            .Build<Cell>()
+            .With(c => c.CellValue, (int?) null)
+            .With(c => c.Row, 1)
+            .With(c => c.PossibleValues, [1])
+            .Create();
+        var cell2 = _fixture
+            .Build<Cell>()
+            .With(c => c.CellValue, (int?) null)
+            .With(c => c.Row, 1)
+            .With(c => c.PossibleValues, [1, 2])
+            .Create();
+        var sudoku = _fixture
+            .Build<Sudoku>()
+            .With(s => s.Cells, [cell, cell2])
+            .Create();
+
+        // Act
+        var result = SingleLegalValueSolver.Execute(sudoku);
+
+        // Assert
+        result.Cells.Select(c => c.CellValue).Should().Equal(1, 2);
+    }
+
 }
