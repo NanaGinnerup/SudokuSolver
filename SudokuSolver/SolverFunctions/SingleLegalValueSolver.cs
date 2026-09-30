@@ -11,7 +11,7 @@ public class SingleLegalValueSolver
             Cells = sudoku.Cells
                 .Select(c => 
                     (c.PossibleValues.Count == 1 && c.CellValue == null)
-                    ? c with { CellValue = c.PossibleValues.First() }
+                    ? c with { CellValue = c.PossibleValues.First(), PossibleValues = []}
                     : c
                 )
                 .ToList()
