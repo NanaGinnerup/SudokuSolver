@@ -31,7 +31,7 @@ public static class OneLineSudokuConverter
                     CellValue = cellValue,
                     PossibleValues = cellValue != null 
                         ? [(int) cellValue] 
-                        : legalValues,
+                        : new HashSet<int>(legalValues),
                 };
                 cellList.Add(cell);
                 cellIndex++;
