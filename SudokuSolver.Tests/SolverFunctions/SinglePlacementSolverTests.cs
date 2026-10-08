@@ -13,8 +13,6 @@ public class SinglePlacementSolverTests
     public void OnlyOnePossibleValue_CellValueUpdatedToTheValue()
     {
         // Arrange
-        var sut = _fixture.Create<SinglePlacementSolver>();
-        
         var cell1 = CreateCell([1, 3, 4], row: 1);
         var cell2 = CreateCell([1, 2, 4], row: 1);
         var cell3 = CreateCell([1, 2, 4], row: 1);
@@ -25,7 +23,7 @@ public class SinglePlacementSolverTests
             .Create();
         
         // Act
-        var result = sut.Execute(sudoku);
+        var result = SinglePlacementSolver.Execute(sudoku);
         
         // Assert
         result.Cells.Count(c => c.CellValue == null).Should().Be(2);
@@ -37,8 +35,6 @@ public class SinglePlacementSolverTests
     public void LayeredOnlyOnePossibleValue_BothCellValueUpdatedToTheValue()
     {
         // Arrange
-        var sut = _fixture.Create<SinglePlacementSolver>();
-
         var cell1 = CreateCell([1, 2, 4], row: 1);
         var cell2 = CreateCell([2, 3, 4], row: 1);
         var cell3 = CreateCell([3, 4], row: 1);
@@ -50,7 +46,7 @@ public class SinglePlacementSolverTests
             .Create();
         
         // Act
-        var result = sut.Execute(sudoku);
+        var result = SinglePlacementSolver.Execute(sudoku);
         
         // Assert
         result.Cells.Count(c => c.CellValue == null).Should().Be(2);

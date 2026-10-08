@@ -4,7 +4,7 @@ namespace SudokuSolver.SolverFunctions;
 
 public class SinglePlacementSolver
 {
-    public Sudoku Execute(Sudoku sudoku)
+    public static Sudoku Execute(Sudoku sudoku)
     {
         var outputSudoku = sudoku;
         outputSudoku = SolveForSinglePlacement(outputSudoku, c => c.Row);
@@ -15,7 +15,7 @@ public class SinglePlacementSolver
         return outputSudoku;
     }
 
-    private Sudoku SolveForSinglePlacement(Sudoku sudoku, Func<Cell, int> cellPropertySelector)
+    private static Sudoku SolveForSinglePlacement(Sudoku sudoku, Func<Cell, int> cellPropertySelector)
     {
         foreach (var i in sudoku.IncludedValues)
         {
