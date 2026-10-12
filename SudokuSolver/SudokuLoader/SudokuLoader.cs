@@ -18,30 +18,41 @@ public static class SudokuLoader
             var directory = Directory.GetCurrentDirectory();
             fileLocation = $"{directory}/Data/sudoku.csv";
         }
-        var reader = new StreamReader(fileLocation);
-        
+        using var reader = new StreamReader(fileLocation);
+
         var config = new CsvConfiguration(CultureInfo.InvariantCulture)
         {
             HasHeaderRecord = header
         };
-        var csv = new CsvReader(reader, config);
+        using var csv = new CsvReader(reader, config);
 
-        var allSudoku = csv
-            .GetRecords<OneLineSudoku>()
-            .ToList();
-        Console.WriteLine($"Sudokus read ({timer.ElapsedMilliseconds} ms)");
-        
-        var numberSudoku = allSudoku.Count;
-        if (index >= numberSudoku)
+        if (header)
+        {
+            csv.Read();
+            csv.ReadHeader();
+        }
+
+        // Only parse the requested row; skip the rest without creating records
+        var rowsRead = 0;
+        var found = false;
+        while (csv.Read())
+        {
+            if (rowsRead == index)
+            {
+                found = true;
+                break;
+            }
+            rowsRead++;
+        }
+        if (!found)
         {
             throw new IndexOutOfRangeException(
-                $"Requested index {index} exceeds the maximum index in data set ({numberSudoku - 1})");
+                $"Requested index {index} exceeds the maximum index in data set ({rowsRead - 1})");
         }
-        var oneLineSudoku = allSudoku
-            .Skip(index)
-            .FirstOrDefault();
-        
-        var sudoku = OneLineSudokuConverter.ConvertToSudoku(oneLineSudoku!);
+        var oneLineSudoku = csv.GetRecord<OneLineSudoku>();
+        Console.WriteLine($"Sudoku read ({timer.ElapsedMilliseconds} ms)");
+
+        var sudoku = OneLineSudokuConverter.ConvertToSudoku(oneLineSudoku);
         Console.WriteLine($"Sudoku loaded ({timer.ElapsedMilliseconds} ms)");
         return sudoku;
     }
