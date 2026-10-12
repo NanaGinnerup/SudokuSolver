@@ -29,7 +29,7 @@ public static class SudokuLoader
         var allSudoku = csv
             .GetRecords<OneLineSudoku>()
             .ToList();
-        Console.WriteLine($"Sudoku read ({timer.ElapsedMilliseconds} ms)");
+        Console.WriteLine($"Sudokus read ({timer.ElapsedMilliseconds} ms)");
         
         var numberSudoku = allSudoku.Count;
         if (index >= numberSudoku)
