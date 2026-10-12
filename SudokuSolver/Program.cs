@@ -17,6 +17,7 @@ while (sudokuUnsolved)
     sudoku = LegalValuesCheck.UpdatePossibleValues(sudoku);
     sudoku = SingleLegalValueSolver.Execute(sudoku);
     sudoku = SinglePlacementSolver.Execute(sudoku);
+    sudoku = NakedSubsetElimination.Execute(sudoku);
 
     if (CellsAreSame(sudoku.Cells, unalteredSudoku.Cells))
     {
