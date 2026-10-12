@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System.Diagnostics;
+using System.Globalization;
 using CsvHelper;
 using CsvHelper.Configuration;
 using CsvHelper.Configuration.Attributes;
@@ -10,6 +11,8 @@ public static class SudokuLoader
 {
     public static Sudoku LoadSudoku(string? fileLocation, int index = 0, bool header = true)
     {
+        var timer = Stopwatch.StartNew();
+        
         if (fileLocation == null)
         {
             var directory = Directory.GetCurrentDirectory();
@@ -26,6 +29,8 @@ public static class SudokuLoader
         var allSudoku = csv
             .GetRecords<OneLineSudoku>()
             .ToList();
+        Console.WriteLine($"Sudokus read ({timer.ElapsedMilliseconds} ms)");
+        
         var numberSudoku = allSudoku.Count;
         if (index >= numberSudoku)
         {
@@ -35,7 +40,9 @@ public static class SudokuLoader
         var oneLineSudoku = allSudoku
             .Skip(index)
             .FirstOrDefault();
+        
         var sudoku = OneLineSudokuConverter.ConvertToSudoku(oneLineSudoku!);
+        Console.WriteLine($"Sudoku loaded ({timer.ElapsedMilliseconds} ms)");
         return sudoku;
     }
     
