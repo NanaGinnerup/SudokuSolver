@@ -1,4 +1,5 @@
-﻿using SudokuSolver.Contracts;
+﻿using System.Diagnostics;
+using SudokuSolver.Contracts;
 using SudokuSolver.SolverFunctions;
 
 namespace SudokuSolver;
@@ -9,6 +10,8 @@ public static class SolveEntireSudoku
     {
         var sudokuUnsolved = true;
         var sudoku = originalSudoku;
+        
+        var timer = Stopwatch.StartNew();
 
         while (sudokuUnsolved)
         {
@@ -17,18 +20,18 @@ public static class SolveEntireSudoku
 
             if (CellsAreSame(sudoku.Cells, unalteredSudoku.Cells))
             {
-                Console.WriteLine("Sudoku unsolved");
+                Console.WriteLine($"Sudoku unsolved ({timer.ElapsedMilliseconds} ms)");
                 break;
             }
 
             if (sudoku.Cells.Any(c => c.CellValue == null))
             {
                 var numberUnsolvedCells = sudoku.Cells.Count(c => c.CellValue == null);
-                Console.WriteLine($"{numberUnsolvedCells} unsolved cells");
+                Console.WriteLine($"{numberUnsolvedCells} unsolved cells (elapsed time: {timer.ElapsedMilliseconds} ms)");
                 continue;
             }
             sudokuUnsolved = false;
-            Console.WriteLine("Sudoku successfully solved!");
+            Console.WriteLine($"Sudoku successfully solved! ({timer.ElapsedMilliseconds} ms)");
         }
         return sudoku;
     }

@@ -3,7 +3,7 @@
 using SudokuSolver;
 using SudokuSolver.SudokuLoader;
 
-
-var originalSudoku = SudokuLoader.LoadSudoku(null, 2);
+const int i = 0;
+var originalSudoku = SudokuLoader.LoadSudoku(null, i);
 
 SolveEntireSudoku.AttemptToSolve(originalSudoku);
