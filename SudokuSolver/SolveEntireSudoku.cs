@@ -13,10 +13,7 @@ public static class SolveEntireSudoku
         while (sudokuUnsolved)
         {
             var unalteredSudoku = DeepCopy(sudoku);
-            sudoku = LegalValuesCheck.UpdatePossibleValues(sudoku);
-            sudoku = SingleLegalValueSolver.Execute(sudoku);
-            sudoku = SinglePlacementSolver.Execute(sudoku);
-            sudoku = NakedSubsetElimination.Execute(sudoku);
+            sudoku = NaiveSudokuSolvingFlow(sudoku);
 
             if (CellsAreSame(sudoku.Cells, unalteredSudoku.Cells))
             {
@@ -34,7 +31,16 @@ public static class SolveEntireSudoku
             Console.WriteLine("Sudoku successfully solved!");
         }
         return sudoku;
-    } 
+    }
+
+    private static Sudoku NaiveSudokuSolvingFlow(Sudoku sudoku)
+    {
+        sudoku = LegalValuesCheck.UpdatePossibleValues(sudoku);
+        sudoku = SingleLegalValueSolver.Execute(sudoku);
+        sudoku = SinglePlacementSolver.Execute(sudoku);
+        sudoku = NakedSubsetElimination.Execute(sudoku);
+        return sudoku;
+    }
     
     private static Sudoku DeepCopy(Sudoku sudoku) => new Sudoku 
     { 
