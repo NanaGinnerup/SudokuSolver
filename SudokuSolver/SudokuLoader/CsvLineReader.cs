@@ -4,7 +4,7 @@ public static class CsvLineReader
 {
     private const int BufferSize = 1 << 20;
 
-    public static string ReadLine(Stream stream, long lineIndex)
+    public static string ReadLine(Stream stream, long lineIndex, bool hasHeader)
     {
         ArgumentOutOfRangeException.ThrowIfNegative(lineIndex);
 
@@ -17,9 +17,10 @@ public static class CsvLineReader
 
         if (lineStart < 0)
         {
+            var numberPuzzles = hasHeader ? totalLines - 1 : totalLines;
             throw new IndexOutOfRangeException(
-                $"Requested line {lineIndex} does not exist. " +
-                $"The file contains {totalLines} lines.");
+                $"Requested puzzle {lineIndex} does not exist." +
+                $"The file contains {numberPuzzles} puzzles.");
         }
 
         stream.Position = lineStart;

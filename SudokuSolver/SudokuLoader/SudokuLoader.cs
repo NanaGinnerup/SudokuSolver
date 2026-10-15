@@ -36,7 +36,8 @@ public static class SudokuLoader
 
         var puzzleLine = CsvLineReader.ReadLine(
             stream,
-            lineIndex);
+            lineIndex,
+            hasHeader);
         Console.WriteLine($"Sudoku read ({timer.ElapsedMilliseconds} ms)");
 
         var record = SudokuCsvParser.Parse(
