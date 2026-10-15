@@ -11,6 +11,6 @@ if (options.ShowHelp)
     CommandLineOptions.PrintHelp();
     return;
 }
-var originalSudoku = SudokuLoader.LoadSudoku(null, options.SudokuIndex);
+var originalSudoku = SudokuLoader.LoadSudoku(null, options.SudokuIndex, options.HasHeader);
 
 SolveEntireSudoku.AttemptToSolve(originalSudoku);
