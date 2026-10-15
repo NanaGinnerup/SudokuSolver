@@ -14,7 +14,7 @@ The translation of the image to a Sudoku could be either through a CNN or by usi
    dotnet run
    ```
 
-   To solve a specific Sudoku puzzle, use the `--sudokuIndex` (or `--i`) flag followed by an integer:
+   To solve a specific Sudoku puzzle, use the `--sudokuIndex` (or `-i`) flag followed by an integer:
    ```bash
    dotnet run --sudokuIndex 10
    ```
