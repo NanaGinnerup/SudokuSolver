@@ -1,7 +1,4 @@
 ﻿using System.Diagnostics;
-using System.Globalization;
-using CsvHelper;
-using CsvHelper.Configuration;
 using CsvHelper.Configuration.Attributes;
 using SudokuSolver.Contracts;
 
@@ -9,48 +6,67 @@ namespace SudokuSolver.SudokuLoader;
 
 public static class SudokuLoader
 {
-    public static Sudoku LoadSudoku(string? fileLocation, int index = 0, bool header = true)
-    {
-        var timer = Stopwatch.StartNew();
-        
-        if (fileLocation == null)
-        {
-            var directory = Directory.GetCurrentDirectory();
-            fileLocation = $"{directory}/Data/sudoku.csv";
-        }
-        var reader = new StreamReader(fileLocation);
-        
-        var config = new CsvConfiguration(CultureInfo.InvariantCulture)
-        {
-            HasHeaderRecord = header
-        };
-        var csv = new CsvReader(reader, config);
+    private const int FileBufferSize = 1 << 16;
 
-        var allSudoku = csv
-            .GetRecords<OneLineSudoku>()
-            .ToList();
-        Console.WriteLine($"Sudokus read ({timer.ElapsedMilliseconds} ms)");
-        
-        var numberSudoku = allSudoku.Count;
-        if (index >= numberSudoku)
-        {
-            throw new IndexOutOfRangeException(
-                $"Requested index {index} exceeds the maximum index in data set ({numberSudoku - 1})");
-        }
-        var oneLineSudoku = allSudoku
-            .Skip(index)
-            .FirstOrDefault();
-        
-        var sudoku = OneLineSudokuConverter.ConvertToSudoku(oneLineSudoku!);
-        Console.WriteLine($"Sudoku loaded ({timer.ElapsedMilliseconds} ms)");
-        return sudoku;
+    public static Sudoku LoadSudoku(
+        string? fileLocation,
+        int index = 0,
+        bool hasHeader = true)
+    {
+        ArgumentOutOfRangeException.ThrowIfNegative(index);
+
+        var timer = Stopwatch.StartNew();
+        var path = fileLocation ?? Path.Combine(
+            Directory.GetCurrentDirectory(),
+            "Data",
+            "sudoku.csv");
+
+        using var stream = new FileStream(
+            path,
+            FileMode.Open,
+            FileAccess.Read,
+            FileShare.Read,
+            FileBufferSize);
+
+        var headerLine = hasHeader
+            ? ReadHeader(stream)
+            : null;
+
+        var lineIndex = (long)index + (hasHeader ? 1 : 0);
+
+        var puzzleLine = CsvLineReader.ReadLine(
+            stream,
+            lineIndex,
+            hasHeader);
+        Console.WriteLine($"Sudoku read ({timer.ElapsedMilliseconds} ms)");
+
+        var record = SudokuCsvParser.Parse(
+            puzzleLine,
+            headerLine);
+        Console.WriteLine($"Sudoku parsed ({timer.ElapsedMilliseconds} ms)");
+
+        return OneLineSudokuConverter.ConvertToSudoku(record);
     }
-    
+
+    private static string ReadHeader(Stream stream)
+    {
+        stream.Position = 0;
+
+        using var reader = new StreamReader(
+            stream,
+            leaveOpen: true);
+
+        return reader.ReadLine()
+               ?? throw new InvalidDataException(
+                   "The CSV file does not contain a header.");
+    }
+
     public class OneLineSudoku
     {
-        [Name("puzzle")]
+        [Name("puzzle"), Index(0)]
         public required string Puzzle { get; set; }
-        [Name("solution")]
+
+        [Name("solution"), Index(1)]
         public required string Solution { get; set; }
     }
 }

@@ -78,6 +78,55 @@ public class SudokuLoaderTests
                 );
     }
     
+    [Theory]
+    [InlineData(0, "1000000000000000")]
+    [InlineData(1, "2000000000000000")]
+    [InlineData(2, "3000000000000000")]
+    public void csvFile_LoadSudoku_ReturnsRequestedRow(int index, string expectedOneLinePuzzle)
+    {
+        // Arrange
+        var file = WriteCsv(
+            "puzzle,solution\r\n" +
+            "1000000000000000,1234341221434321\r\n" +
+            "2000000000000000,1234341221434321\r\n" +
+            "3000000000000000,1234341221434321");
+
+        // Act
+        var result = SudokuLoader.SudokuLoader.LoadSudoku(file, index);
+
+        // Assert
+        var actualOneLinePuzzle = string.Concat(result.Cells.Select(c => c.CellValue?.ToString() ?? "0"));
+        actualOneLinePuzzle.Should().Be(expectedOneLinePuzzle);
+        File.Delete(file);
+    }
+
+    [Theory]
+    [InlineData("puzzle,solution\n1000000000000000,1234341221434321\n2000000000000000,1234341221434321\n")]
+    [InlineData("puzzle,solution\n1000000000000000,1234341221434321\n2000000000000000,1234341221434321")]
+    public void indexPastEnd_LoadSudoku_ThrowsWithMaxIndex(string content)
+    {
+        // Arrange
+        var file = WriteCsv(content);
+
+        // Act
+        var act = () => SudokuLoader.SudokuLoader.LoadSudoku(file, 2);
+
+        // Assert
+        act.Should().Throw<IndexOutOfRangeException>()
+            .WithMessage(
+                $"Requested puzzle 3 does not exist." + 
+                $"The file contains 2 puzzles."
+                );
+        File.Delete(file);
+    }
+
+    private static string WriteCsv(string content)
+    {
+        var file = Path.GetTempFileName();
+        File.WriteAllText(file, content);
+        return file;
+    }
+
     private record ExpectedCell(
         int Row,
         int Column,
