@@ -5,7 +5,7 @@ The translation of the image to a Sudoku could be either through a CNN or by usi
 
 ### How to use
 
-> **Note:** This project is still a work in progress, so the setup process may change.
+> **Note:** This project is still a work in progress, so the setup process is likely to change.
 
 1. Download the [Sudoku dataset from Kaggle](https://www.kaggle.com/datasets/rohanrao/sudoku) and place it in a folder Data in the path `SudokuSolver/Data` from the  solution root within the project.
 2. Open a terminal and navigate to the `SudokuSolver/SudokuSolver` directory.
