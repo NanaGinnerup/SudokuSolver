@@ -4,9 +4,20 @@ However, the plan is to expand this code to handle an image inputted from the us
 The translation of the image to a Sudoku could be either through a CNN or by using a llm - this is still to be decided.
 
 ### How to use
-Since this is still a work in progress, the way to use the program is at the moment to
-1. Save the [Kaggle data set](https://www.kaggle.com/datasets/rohanrao/sudoku) in the folder Data within the project
-2. Specify the index, i, of the sudoku you want the program to try to solve directly in Program.cs
-3. Run the Program
-   
+
+> **Note:** This project is still a work in progress, so the setup process may change.
+
+1. Download the [Sudoku dataset from Kaggle](https://www.kaggle.com/datasets/rohanrao/sudoku) and place it in the `Data` folder within the project.
+2. Open a terminal and navigate to the `SudokuSolver/SudokuSolver` directory.
+3. Run the program using:
+   ```bash
+   dotnet run
+   ```
+
+   To solve a specific Sudoku puzzle, use the `--sudokuIndex` (or `--i`) flag followed by an integer:
+   ```bash
+   dotnet run --sudokuIndex 10
+   ```
+   This example selects the Sudoku puzzle at index `10`.
+
 As of now, the program will only output an message if the sudoku was solved or not 
