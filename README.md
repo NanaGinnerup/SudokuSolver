@@ -7,7 +7,7 @@ The translation of the image to a Sudoku could be either through a CNN or by usi
 
 > **Note:** This project is still a work in progress, so the setup process may change.
 
-1. Download the [Sudoku dataset from Kaggle](https://www.kaggle.com/datasets/rohanrao/sudoku) and place it in the `Data` folder within the project.
+1. Download the [Sudoku dataset from Kaggle](https://www.kaggle.com/datasets/rohanrao/sudoku) and place it in a folder Data in the path `SudokuSolver/Data` from the  solution root within the project.
 2. Open a terminal and navigate to the `SudokuSolver/SudokuSolver` directory.
 3. Run the program using:
    ```bash
