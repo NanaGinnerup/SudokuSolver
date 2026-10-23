@@ -16,8 +16,11 @@ public static class SudokuLoader
         ArgumentOutOfRangeException.ThrowIfNegative(index);
 
         var timer = Stopwatch.StartNew();
+        
+        var repositoryRoot = FindRepositoryRoot();
         var path = fileLocation ?? Path.Combine(
-            Directory.GetCurrentDirectory(),
+            repositoryRoot,
+            "SudokuSolver",
             "Data",
             "sudoku.csv");
 
@@ -46,6 +49,20 @@ public static class SudokuLoader
         Console.WriteLine($"Sudoku parsed ({timer.ElapsedMilliseconds} ms)");
 
         return OneLineSudokuConverter.ConvertToSudoku(record);
+    }
+    
+    private static string FindRepositoryRoot()
+    {
+        DirectoryInfo? directory = new(AppContext.BaseDirectory);
+
+        while (directory is not null)
+        {
+            if (Directory.Exists(Path.Combine(directory.FullName, ".git")))
+                return directory.FullName;
+            directory = directory.Parent;
+        }
+        throw new DirectoryNotFoundException(
+            "Could not find repository root.");
     }
 
     private static string ReadHeader(Stream stream)
