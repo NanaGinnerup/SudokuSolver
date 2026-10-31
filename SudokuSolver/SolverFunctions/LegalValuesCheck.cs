@@ -2,9 +2,9 @@
 
 namespace SudokuSolver.SolverFunctions;
 
-public class LegalValuesCheck
+public class LegalValuesCheck : ISolverFunction
 {
-    public static Sudoku UpdatePossibleValues(Sudoku sudoku)
+    public Sudoku Execute(Sudoku sudoku)
     {
         foreach (var cell in sudoku.Cells)
         {

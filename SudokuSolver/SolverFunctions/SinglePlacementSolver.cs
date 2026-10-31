@@ -2,9 +2,9 @@
 
 namespace SudokuSolver.SolverFunctions;
 
-public class SinglePlacementSolver
+public class SinglePlacementSolver : ISolverFunction
 {
-    public static Sudoku Execute(Sudoku sudoku)
+    public Sudoku Execute(Sudoku sudoku)
     {
         var outputSudoku = sudoku;
         outputSudoku = SolveForSinglePlacement(outputSudoku, c => c.Row);

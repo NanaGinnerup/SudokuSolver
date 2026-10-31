@@ -27,7 +27,7 @@ public class SingleLegalValueSolverTests
             .Create();
         
         // Act
-        var result = SingleLegalValueSolver.Execute(sudoku);
+        var result = new SingleLegalValueSolver().Execute(sudoku);
         
         // Assert
         result.Cells.Select(c => c.CellValue).Should().AllBeEquivalentTo(cellValue);
@@ -50,7 +50,7 @@ public class SingleLegalValueSolverTests
             .Create();
         
         // Act
-        var result = SingleLegalValueSolver.Execute(sudoku);
+        var result = new SingleLegalValueSolver().Execute(sudoku);
         
         // Assert
         result.Cells.Select(c => c.CellValue)
@@ -81,7 +81,7 @@ public class SingleLegalValueSolverTests
             .Create();
 
         // Act
-        var result = SingleLegalValueSolver.Execute(sudoku);
+        var result = new SingleLegalValueSolver().Execute(sudoku);
 
         // Assert
         result.Cells.Select(c => c.CellValue).Should().Equal(1, 2);

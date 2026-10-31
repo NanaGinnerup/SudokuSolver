@@ -32,7 +32,7 @@ public class NakedSubsetEliminationTests
         var sudoku = CreateSudoku(cells);
 
         // Act
-        var result = NakedSubsetElimination.Execute(sudoku);
+        var result = new NakedSubsetElimination().Execute(sudoku);
 
         // Assert
         result.Cells[0].PossibleValues.Should().BeEquivalentTo([1, 2]);
@@ -55,7 +55,7 @@ public class NakedSubsetEliminationTests
         var sudoku = CreateSudoku(cells);
 
         // Act
-        var result = NakedSubsetElimination.Execute(sudoku);
+        var result = new NakedSubsetElimination().Execute(sudoku);
 
         // Assert
         result.Should().BeSameAs(sudoku);
@@ -79,7 +79,7 @@ public class NakedSubsetEliminationTests
         var sudoku = CreateSudoku(cells);
 
         // Act
-        var result = NakedSubsetElimination.Execute(sudoku);
+        var result = new NakedSubsetElimination().Execute(sudoku);
 
         // Assert
         result.Cells[2].PossibleValues.Should().BeEquivalentTo([3, 4]);
@@ -101,7 +101,7 @@ public class NakedSubsetEliminationTests
         var sudoku = CreateSudoku(cells);
 
         // Act
-        var result = NakedSubsetElimination.Execute(sudoku);
+        var result = new NakedSubsetElimination().Execute(sudoku);
 
         // Assert
         result.Should().BeSameAs(sudoku);
@@ -123,7 +123,7 @@ public class NakedSubsetEliminationTests
         var sudoku = CreateSudoku(cells);
 
         // Act
-        var result = NakedSubsetElimination.Execute(sudoku);
+        var result = new NakedSubsetElimination().Execute(sudoku);
 
         // Assert
         result.Cells[0].PossibleValues.Should().BeEquivalentTo([1, 2, 3]);
