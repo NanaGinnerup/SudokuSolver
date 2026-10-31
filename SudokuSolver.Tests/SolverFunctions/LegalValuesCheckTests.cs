@@ -44,7 +44,7 @@ public class LegalValuesCheckTests
             .With(s => s.Cells, cells)
             .Create();
         // Act
-        var result = LegalValuesCheck.UpdatePossibleValues(sudoku);
+        var result = new LegalValuesCheck().Execute(sudoku);
 
         //Assert
         var allPossibleCellValues = Enumerable.Range(1, 9).ToHashSet();
@@ -96,7 +96,7 @@ public class LegalValuesCheckTests
             .With(s => s.Cells, cells)
             .Create();
         // Act
-        var result = LegalValuesCheck.UpdatePossibleValues(sudoku);
+        var result = new LegalValuesCheck().Execute(sudoku);
 
         //Assert
         var allPossibleCellValues = Enumerable.Range(1, 9).ToHashSet();

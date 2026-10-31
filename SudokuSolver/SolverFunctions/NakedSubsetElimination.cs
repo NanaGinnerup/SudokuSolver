@@ -2,9 +2,9 @@
 
 namespace SudokuSolver.SolverFunctions;
 
-public class NakedSubsetElimination
+public class NakedSubsetElimination : ISolverFunction
 {
-    public static Sudoku Execute(Sudoku sudoku)
+    public Sudoku Execute(Sudoku sudoku)
     {
         var outputSudoku = sudoku;
         outputSudoku = EliminateCandidatesFromSubset(outputSudoku, c => c.Row);

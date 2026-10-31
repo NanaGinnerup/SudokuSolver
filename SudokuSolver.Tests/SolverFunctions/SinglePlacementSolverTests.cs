@@ -23,7 +23,7 @@ public class SinglePlacementSolverTests
             .Create();
         
         // Act
-        var result = SinglePlacementSolver.Execute(sudoku);
+        var result = new SinglePlacementSolver().Execute(sudoku);
         
         // Assert
         result.Cells.Count(c => c.CellValue == null).Should().Be(2);
@@ -46,7 +46,7 @@ public class SinglePlacementSolverTests
             .Create();
         
         // Act
-        var result = SinglePlacementSolver.Execute(sudoku);
+        var result = new SinglePlacementSolver().Execute(sudoku);
         
         // Assert
         result.Cells.Count(c => c.CellValue == null).Should().Be(2);

@@ -2,9 +2,11 @@
 
 namespace SudokuSolver.SolverFunctions;
 
-public class SingleLegalValueSolver
+public class SingleLegalValueSolver : ISolverFunction
 {
-    public static Sudoku Execute(Sudoku sudoku)
+    private readonly LegalValuesCheck _legalValuesCheck = new();
+
+    public Sudoku Execute(Sudoku sudoku)
     {
         var outputSudoku = sudoku with
         {
@@ -16,7 +18,7 @@ public class SingleLegalValueSolver
                 )
                 .ToList()
         };
-        outputSudoku = LegalValuesCheck.UpdatePossibleValues(outputSudoku);
+        outputSudoku = _legalValuesCheck.Execute(outputSudoku);
         
         if (!CellsAreSame(outputSudoku.Cells, sudoku.Cells))
             outputSudoku = Execute(outputSudoku);

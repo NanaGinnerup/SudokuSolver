@@ -36,14 +36,16 @@ public static class SolveEntireSudoku
         return sudoku;
     }
 
-    private static Sudoku NaiveSudokuSolvingFlow(Sudoku sudoku)
-    {
-        sudoku = LegalValuesCheck.UpdatePossibleValues(sudoku);
-        sudoku = SingleLegalValueSolver.Execute(sudoku);
-        sudoku = SinglePlacementSolver.Execute(sudoku);
-        sudoku = NakedSubsetElimination.Execute(sudoku);
-        return sudoku;
-    }
+    private static readonly ISolverFunction[] SolverSteps =
+    [
+        new LegalValuesCheck(),
+        new SingleLegalValueSolver(),
+        new SinglePlacementSolver(),
+        new NakedSubsetElimination(),
+    ];
+
+    private static Sudoku NaiveSudokuSolvingFlow(Sudoku sudoku) =>
+        SolverSteps.Aggregate(sudoku, (current, step) => step.Execute(current));
     
     private static Sudoku DeepCopy(Sudoku sudoku) => new Sudoku 
     { 
