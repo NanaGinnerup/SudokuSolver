@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using SudokuSolver.Contracts;
 using SudokuSolver.SolverFunctions;
+using SudokuSolver.Visualisations;
 
 namespace SudokuSolver;
 
@@ -33,6 +34,7 @@ public static class SolveEntireSudoku
             sudokuUnsolved = false;
             Console.WriteLine($"Sudoku successfully solved! ({timer.ElapsedMilliseconds} ms)");
         }
+        PrintToTerminal.Print(sudoku);
         return sudoku;
     }
 

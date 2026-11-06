@@ -3,6 +3,7 @@
 using SudokuSolver;
 using SudokuSolver.CommandLine;
 using SudokuSolver.SudokuLoader;
+using SudokuSolver.Visualisations;
 
 var options = CommandLineOptions.Parse(args);
 
@@ -12,5 +13,6 @@ if (options.ShowHelp)
     return;
 }
 var originalSudoku = SudokuLoader.LoadSudoku(null, options.SudokuIndex);
+PrintToTerminal.Print(originalSudoku);
 
 SolveEntireSudoku.AttemptToSolve(originalSudoku);
